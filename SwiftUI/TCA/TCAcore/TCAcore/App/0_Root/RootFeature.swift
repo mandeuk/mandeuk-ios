@@ -29,11 +29,11 @@ struct RootFeature {
         Reduce<State, Action> { state, action in
             switch action {
                 // MARK: Navigate 신호 수신
-            case .path(.element(id: _, action: .login(.navigate(let option)))):
+            case .path(.element(id: _, action: .login   (.navigate(let option)))):
                 return .send(.navigate(option))
-            case .path(.element(id: _, action: .main(.navigate(let option)))):
+            case .path(.element(id: _, action: .main    (.navigate(let option)))):
                 return .send(.navigate(option))
-            case .path(.element(id: _, action: .number(.navigate(let option)))):
+            case .path(.element(id: _, action: .number  (.navigate(let option)))):
                 return .send(.navigate(option))
                 
             
@@ -63,7 +63,7 @@ struct RootFeature {
                 return .none
             case .prefix(let path):
                 if let index = state.path.firstIndex(where: { ps in
-                    return getPathId(from: ps) == path.rawValue
+                    return getPathName(from: ps) == path.rawValue
                 }) {
                     state.path = StackState<Path.State>(state.path.prefix(through: index))
                 }
@@ -80,31 +80,6 @@ struct RootFeature {
         }
         .forEach(\.path, action: \.path)
     }
-    
-    private func buildPathList(_ option: [Path.State]) -> [Path.State]? {
-        guard !option.isEmpty else { return nil }
-        
-        var list:[Path.State] = []
-        
-        option.forEach { path in
-            switch path {
-            case .login:
-                list.append(.login(LoginFeature.State()))
-                break
-            case .main:
-                list.append(.main(MainFeature.State()))
-                break
-            case .number:
-                list.append(.number( NumberFeature.State()) )
-                break
-            case .options:
-                list.append(.options(OptionsFeature.State()))
-                break
-            }
-        }
-        
-        return list.isEmpty ? nil : list
-    }
 }
 
 @Reducer
@@ -114,36 +89,22 @@ enum Path {
     case options(OptionsFeature)
     case number(NumberFeature)
 }
+
 enum PathName: String {
     case login
-    case main
+    case main, number
     case options
-    case number
 }
-func getPathId(from state: Path.State) -> String {
+
+func getPathName(from state: Path.State) -> String {
     switch state {
-    case .login:
-        return PathName.login.rawValue
-    case .main:
-        return PathName.main.rawValue
-    case .options:
-        return PathName.options.rawValue
-    case .number:
-        return PathName.number.rawValue
+    case .login:    return PathName.login.rawValue
+    case .main:     return PathName.main.rawValue
+    case .options:  return PathName.options.rawValue
+    case .number:   return PathName.number.rawValue
     }
 }
-func getPathId(from path: Path) -> String {
-    switch path {
-    case .login:
-        return PathName.login.rawValue
-    case .main:
-        return PathName.main.rawValue
-    case .options:
-        return PathName.options.rawValue
-    case .number:
-        return PathName.number.rawValue
-    }
-}
+
 
 
 enum NavigationAction {
