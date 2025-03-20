@@ -18,9 +18,21 @@ struct RootView: View {
             // Root view of the navigation stack
             VStack {
                 Button(action: {
-                    store.send(.navigate(.init(action: .next, paths: [.login])))
+                    store.send(.navigate(.next([.login(.init())])))
                 }, label: {
                     Text("Login")
+                })
+                
+                Button(action: {
+                    store.send(.navigate(.next([.main(.init())])))
+                }, label: {
+                    Text("Main")
+                })
+                
+                Button(action: {
+                    store.send(.navigate(.next([.number(.init())])))
+                }, label: {
+                    Text("Number")
                 })
             }
         } destination: { store in

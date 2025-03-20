@@ -16,7 +16,7 @@ struct LoginFeature {
     }
     
     enum Action {
-        case navigate(NavigationOption)
+        case navigate(NavigationAction)
         case clickLogin
         case clickMultiple
     }
@@ -27,9 +27,9 @@ struct LoginFeature {
             case .navigate: return .none
                 
             case .clickLogin:
-                return .send(.navigate(.init(action: .replace, paths: [.main])))
+                return .send(.navigate(.next([.main(MainFeature.State())]) ))
             case .clickMultiple:
-                return .send(.navigate(.init(action: .next, paths: [.number, .number, .main], parameter: ["number": 55])))
+                return .send(.navigate(.next([.number(.init(number: 1)), .number(.init(number: 2)), .main(MainFeature.State())]) ))
             }
         }
     }

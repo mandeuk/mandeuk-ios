@@ -12,16 +12,10 @@ struct NumberFeature {
     @ObservableState
     struct State: Equatable {
         var number: Int = 0
-        
-        init(_ parameter: [String:Any]? = nil) {
-            if let param = parameter, let number = param["number"] as? Int {
-                self.number = number
-            }
-        }
     }
     
     enum Action {
-        case navigate(NavigationOption)
+        case navigate(NavigationAction)
         
         case goBack
         case goBackToMain
@@ -35,12 +29,12 @@ struct NumberFeature {
                 
                 
             case .goBack:
-                return .send(.navigate(.init(action: .back, paths: [])))
+                return .send(.navigate(.back))
             case .goBackToMain:
                 print("NumberFeature goBackToMain")
-                return .send(.navigate(.init(action: .backTo, paths: [.main])))
+                return .send(.navigate(.backTo(.main)))
             case .plus:
-                return .send(.navigate(.init(action: .next, paths: [.number], parameter: ["number": state.number + 1])))
+                return .send(.navigate(.next([.number(.init(number: state.number+1))])))
             }
         }
     }

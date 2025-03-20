@@ -18,7 +18,7 @@ struct MainFeature {
     }
     
     enum Action {
-        case navigate(NavigationOption)
+        case navigate(NavigationAction)
         case clickBackButton
         case clickNumberButton
     }
@@ -33,12 +33,7 @@ struct MainFeature {
                     await self.dismiss()
                 }
             case .clickNumberButton:
-                
-                return .send(.navigate(.init(
-                    action: .next,
-                    paths: [.number],
-                    parameter: ["number":7]
-                )))
+                return .send(.navigate(.next([.number(.init(number: 1))])))
             }
         }
     }
