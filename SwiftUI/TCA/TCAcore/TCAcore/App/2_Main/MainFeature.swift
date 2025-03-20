@@ -10,7 +10,6 @@ import ComposableArchitecture
 @Reducer
 struct MainFeature {
     @Dependency(\.dismiss) var dismiss
-    @Environment(\.navigator) var navigator
     
     @ObservableState
     struct State: Equatable {

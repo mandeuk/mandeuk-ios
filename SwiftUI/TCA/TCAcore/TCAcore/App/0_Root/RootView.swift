@@ -48,31 +48,11 @@ struct RootView: View {
                 NumberView(store: store)
             }
         }
-        .environment(\.navigator, store)
 //        .overlay {
 //            VStack {
 //                Text("\(store.path)")
 //                Spacer()
 //            }
 //        }
-    }
-}
-
-
-
-
-
-
-private struct MyRootKey: EnvironmentKey {
-    static let defaultValue = StoreOf<RootFeature>.init(
-        initialState: RootFeature.State(),
-        reducer: { RootFeature() }
-    )
-}
-
-extension EnvironmentValues {
-    var navigator: StoreOf<RootFeature> {
-        get { self[MyRootKey.self] }
-        set { self[MyRootKey.self] = newValue }
     }
 }
