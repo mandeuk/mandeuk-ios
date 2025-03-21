@@ -10,14 +10,15 @@ import ComposableArchitecture
 
 @main
 struct TCAcoreApp: App {
+    
+    static let store = Store(initialState: RootFeature.State()) {
+        RootFeature()
+            ._printChanges()
+    }
+    
     var body: some Scene {
         WindowGroup {
-            RootView(
-                store: StoreOf<RootFeature>.init(
-                    initialState: RootFeature.State(),
-                    reducer: { RootFeature() }
-                )
-            )
+            RootView(store: TCAcoreApp.store)
         }
     }
 }
