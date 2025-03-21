@@ -60,3 +60,12 @@ fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots/**/*.png
 fastlane/test_output
+
+# .DS_Store
+#
+# It is created by MacOS X system when it access directory. It has metadata for folder.
+
+.DS_Store
+._.DS_Store
+**/.DS_Store
+**/._.DS_Store
