@@ -35,6 +35,8 @@ struct MainView: View {
                 })
                 
                 Spacer()
+                
+                WKWebViewPractice(url: "https://forma.dl.it.unity3d.com/")
             }
         }
     }

@@ -13,12 +13,15 @@ struct TCAcoreApp: App {
     
     static let store = Store(initialState: RootFeature.State()) {
         RootFeature()
-            ._printChanges()
+//            ._printChanges()
     }
     
     var body: some Scene {
         WindowGroup {
             RootView(store: TCAcoreApp.store)
+                .onOpenURL { url in
+                    // URL 기반 딥링크 처리
+                }
         }
     }
 }
