@@ -16,7 +16,7 @@ struct CleanApp: App {
 extension CleanApp {
     var body: some Scene {
         WindowGroup {
-            RouterView()
+            LaunchView()
                 .environmentObject(routeManager)
         }
     }

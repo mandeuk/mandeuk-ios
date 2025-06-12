@@ -6,80 +6,8 @@
 //
 
 import SwiftUI
-import Combine
-
-struct RouterView: View {
-    @EnvironmentObject var router: RouteManager
-    
-    @Namespace var namespace
-    
-    var body: some View {
-        NavigationStack(path: $router.path) {
-            VStack {
-                Text("This is NavigationStack View")
-                Button {
-                    router.routeTo(.launch)
-                } label: {
-                    Text("Route To Launch View")
-                }
-                
-                NavigationLink(value: Route.login.rawValue) {
-                    if #available(iOS 18.0, *) {
-                        Text("NavigationLink to Login")
-                            .matchedTransitionSource(id: 1, in: namespace)
-                    } else {
-                        Text("NavigationLink to Login")
-                        // Fallback on earlier versions
-                    }
-                }
-                
-                Button {
-                    router.routeTo(.login)
-                } label: {
-                    if #available(iOS 18.0, *) {
-                        Text("Route To Login View")
-                    } else {
-                        Text("Route To Login View")
-                        // Fallback on earlier versions
-                    }
-                }
-                
-                Button {
-                    router.routeTo(.main, param: TestData(id: 1, name: "inho", age: 32).toParam() )
-                } label: {
-                    Text("Route To Main View")
-                }
-            }
-            .navigationDestination(for: String.self) { value in
-                switch value {
-                case Route.launch.rawValue: LaunchView()
-                case Route.login.rawValue: LoginView()
-                case Route.main.rawValue: MainView(router.getParam())
-                    
-                default:
-                    Text("This is a string screen with value: \(value)")
-                        .onAppear{
-                            shutdownApp()
-                        }
-                }
-            }
-            .onAppear {
-                if router.path.isEmpty {
-                    router.routeTo(.launch)
-                }
-            }
-        }
-    }
-}
-
-//extension RouterView {
-//    func routeTo(_ route: Route) {
-//        path.append(route.rawValue)
-//    }
-//}
 
 enum Route: String {
-    case launch
     case login
     case main
 }
@@ -101,7 +29,6 @@ final class RouteManager: ObservableObject {
 
     private func safeRoute(_ action: @escaping () async -> Void) {
         //            print("@Thread \(#function) - \(DispatchQueue.currentLabel)")
-        
         guard !isRouting else { return }
         
         isRouting = true
@@ -110,6 +37,7 @@ final class RouteManager: ObservableObject {
             try await Task.sleep(for: .seconds(timeCheck(0.7)))
             await action()
             didRoute()
+            isRouting = false
         }
     }
     private func timeCheck(_ delay: Double) -> Double {
@@ -124,7 +52,6 @@ final class RouteManager: ObservableObject {
     }
     private func didRoute() {
         self.latestRouteTime = Date()
-        isRouting = false
     }
     
     
@@ -168,10 +95,10 @@ final class RouteManager: ObservableObject {
     }
     
     
-    func current() -> String {
-        var result: String = ""
+    func currentStack() -> String {
+        var result: String = "root"
         path.forEach { route in
-            result += "\(route)/"
+            result += " -> \(route)"
         }
         return result
     }

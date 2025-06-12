@@ -70,7 +70,7 @@ class APIClient {
             // MARK: - API 일반 케이스
             else {
                 /// 헤더 설정 - 이메일 인증 요청 API에는 Captcha 토큰을 헤더에 넣어야 합니다.
-                if request.path == ApiAddress.User.emailSendCode,
+                if request.path == ApiAddress.User.emailSendCode.urlString,
                    let captchaToken = UserDefaults.standard.value(forKey: "captchaToken") as? String {
                     headers.add(name: "captchatoken", value: captchaToken)
                 }

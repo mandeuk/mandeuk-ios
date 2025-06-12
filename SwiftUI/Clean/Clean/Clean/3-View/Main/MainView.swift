@@ -21,7 +21,10 @@ extension MainView: View {
                 .imageScale(.large)
                 .foregroundStyle(.tint)
             Text("MainView")
-            Text(router.current())
+            Text(router.currentStack())
+            
+            Spacer()
+            
             Text(testData.id.formatted())
             Text(testData.name)
             Text(testData.age.formatted())
@@ -31,12 +34,37 @@ extension MainView: View {
                 Text("Route To Login View")
                     .padding(16)
             }
+            .buttonStyle(.bordered)
             Button {
                 router.back()
             } label: {
                 Text("Back")
                     .padding(16)
             }
+            .buttonStyle(.bordered)
+            
+            Button {
+                router.backToFirst(.main)
+            } label: {
+                Text("Back To First MAIN")
+                    .padding(16)
+            }
+            .buttonStyle(.bordered)
+            Button {
+                router.backToLast(.main)
+            } label: {
+                Text("Back To Last MAIN")
+                    .padding(16)
+            }
+            .buttonStyle(.bordered)
+            Button {
+                router.backToLast(.login)
+            } label: {
+                Text("Back To Last login")
+                    .padding(16)
+            }
+            .buttonStyle(.bordered)
+            
             Button {
                 print(testData)
                 self.testData.updateParam(param)
@@ -45,14 +73,22 @@ extension MainView: View {
                 Text("Print")
                     .padding(16)
             }
-        }
-        .task {
-//            self.testData.updateParam(param)
-        }
-    }
+//            .buttonStyle(.bordered)
+            
+            Spacer()
+        }// end of VStack
+        .toolbar(.hidden, for: .navigationBar)
+    }// end of Body
 }
+
 
 // MARK: Action
 extension MainView {
-    
+    // something..
+}
+
+
+// MARK: API
+extension MainView {
+    // something..
 }

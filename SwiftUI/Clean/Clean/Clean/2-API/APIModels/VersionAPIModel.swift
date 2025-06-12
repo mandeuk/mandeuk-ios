@@ -2,7 +2,7 @@ import Foundation
 import Alamofire
 
 struct GetIosVersionCheckModel: APIRequest {
-    var path: String { ApiAddress.Version.getIosVersionCheck.url }
+    var path: String { ApiAddress.Version.getIosVersionCheck.urlString }
     var method: HTTPMethod { .get }
 //    var encoder: ParameterEncoder { .json }
     
@@ -26,7 +26,7 @@ struct GetIosVersionCheckModel: APIRequest {
 
 
 struct DeleteModel: APIRequest {
-    var path: String { ApiAddress.User.deleteUser }
+    var path: String { ApiAddress.User.deleteUser.urlString }
     var method: HTTPMethod { .delete }
     
     var parameters: Parameter? = nil
