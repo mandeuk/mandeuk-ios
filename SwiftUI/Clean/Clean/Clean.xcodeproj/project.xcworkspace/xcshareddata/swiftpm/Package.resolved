@@ -1,5 +1,5 @@
 {
-  "originHash" : "f9be804b59d6fcd61c949e5db4b9b817ec6f74ec106c9432a7b4839a65e64d1f",
+  "originHash" : "63c90f4b7c67e9ee92741faaabeff6e756f6478c1ddeffca44bbe4ddf9fff7be",
   "pins" : [
     {
       "identity" : "alamofire",
@@ -8,15 +8,6 @@
       "state" : {
         "revision" : "513364f870f6bfc468f9d2ff0a95caccc10044c5",
         "version" : "5.10.2"
-      }
-    },
-    {
-      "identity" : "kingfisher",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/onevcat/Kingfisher.git",
-      "state" : {
-        "revision" : "7deda23bbdca612076c5c315003d8638a08ed0f1",
-        "version" : "8.3.2"
       }
     },
     {
@@ -29,39 +20,21 @@
       }
     },
     {
-      "identity" : "moya",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/Moya/Moya.git",
-      "state" : {
-        "revision" : "c263811c1f3dbf002be9bd83107f7cdc38992b26",
-        "version" : "15.0.3"
-      }
-    },
-    {
-      "identity" : "reactiveswift",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/ReactiveCocoa/ReactiveSwift.git",
-      "state" : {
-        "revision" : "c43bae3dac73fdd3cb906bd5a1914686ca71ed3c",
-        "version" : "6.7.0"
-      }
-    },
-    {
-      "identity" : "rxswift",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/ReactiveX/RxSwift.git",
-      "state" : {
-        "revision" : "5dd1907d64f0d36f158f61a466bab75067224893",
-        "version" : "6.9.0"
-      }
-    },
-    {
       "identity" : "sdwebimage",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/SDWebImage/SDWebImage.git",
       "state" : {
         "revision" : "cac9a55a3ae92478a2c95042dcc8d9695d2129ca",
         "version" : "5.21.0"
+      }
+    },
+    {
+      "identity" : "sdwebimageswiftui",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SDWebImage/SDWebImageSwiftUI.git",
+      "state" : {
+        "revision" : "451c6dfd5ecec2cf626d1d9ca81c2d4a60355172",
+        "version" : "3.1.3"
       }
     },
     {

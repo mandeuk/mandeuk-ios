@@ -7,9 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0B1AE6D12DF180F2006CA50F /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 0B1AE6D02DF180F2006CA50F /* Moya */; };
+		0B2D004E2DF7EC1300585DF0 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 0B2D004D2DF7EC1300585DF0 /* Alamofire */; };
+		0B2D00552DF7F3DB00585DF0 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 0B2D00542DF7F3DB00585DF0 /* SDWebImageSwiftUI */; };
+		0B2D00582DF7F3FB00585DF0 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 0B2D00572DF7F3FB00585DF0 /* SDWebImage */; };
+		0B2D005B2DF7F44200585DF0 /* libwebp in Frameworks */ = {isa = PBXBuildFile; productRef = 0B2D005A2DF7F44200585DF0 /* libwebp */; };
 		0B5D325E2DF69E65005FF020 /* SDWebImageWebPCoder in Frameworks */ = {isa = PBXBuildFile; productRef = 0B5D325D2DF69E65005FF020 /* SDWebImageWebPCoder */; };
-		0B5D32612DF69EDB005FF020 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 0B5D32602DF69EDB005FF020 /* Kingfisher */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,9 +60,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0B5D32612DF69EDB005FF020 /* Kingfisher in Frameworks */,
+				0B2D005B2DF7F44200585DF0 /* libwebp in Frameworks */,
+				0B2D00552DF7F3DB00585DF0 /* SDWebImageSwiftUI in Frameworks */,
+				0B2D004E2DF7EC1300585DF0 /* Alamofire in Frameworks */,
 				0B5D325E2DF69E65005FF020 /* SDWebImageWebPCoder in Frameworks */,
-				0B1AE6D12DF180F2006CA50F /* Moya in Frameworks */,
+				0B2D00582DF7F3FB00585DF0 /* SDWebImage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -121,9 +125,11 @@
 			);
 			name = Clean;
 			packageProductDependencies = (
-				0B1AE6D02DF180F2006CA50F /* Moya */,
 				0B5D325D2DF69E65005FF020 /* SDWebImageWebPCoder */,
-				0B5D32602DF69EDB005FF020 /* Kingfisher */,
+				0B2D004D2DF7EC1300585DF0 /* Alamofire */,
+				0B2D00542DF7F3DB00585DF0 /* SDWebImageSwiftUI */,
+				0B2D00572DF7F3FB00585DF0 /* SDWebImage */,
+				0B2D005A2DF7F44200585DF0 /* libwebp */,
 			);
 			productName = Clean;
 			productReference = 0B0053EF2DF00FE200354749 /* Clean.app */;
@@ -208,9 +214,11 @@
 			mainGroup = 0B0053E62DF00FE200354749;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				0B1AE6CF2DF180F2006CA50F /* XCRemoteSwiftPackageReference "Moya" */,
 				0B5D325C2DF69E65005FF020 /* XCRemoteSwiftPackageReference "SDWebImageWebPCoder" */,
-				0B5D325F2DF69EDB005FF020 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				0B2D004C2DF7EC1300585DF0 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				0B2D00532DF7F3DB00585DF0 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
+				0B2D00562DF7F3FB00585DF0 /* XCRemoteSwiftPackageReference "SDWebImage" */,
+				0B2D00592DF7F44200585DF0 /* XCRemoteSwiftPackageReference "libwebp-Xcode" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 0B0053F02DF00FE200354749 /* Products */;
@@ -339,6 +347,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "";
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -395,6 +404,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "";
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -614,12 +624,36 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		0B1AE6CF2DF180F2006CA50F /* XCRemoteSwiftPackageReference "Moya" */ = {
+		0B2D004C2DF7EC1300585DF0 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Moya/Moya.git";
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
 			requirement = {
 				kind = exactVersion;
-				version = 15.0.3;
+				version = 5.10.2;
+			};
+		};
+		0B2D00532DF7F3DB00585DF0 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI.git";
+			requirement = {
+				kind = exactVersion;
+				version = 3.1.3;
+			};
+		};
+		0B2D00562DF7F3FB00585DF0 /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImage.git";
+			requirement = {
+				kind = exactVersion;
+				version = 5.21.0;
+			};
+		};
+		0B2D00592DF7F44200585DF0 /* XCRemoteSwiftPackageReference "libwebp-Xcode" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/libwebp-Xcode.git";
+			requirement = {
+				kind = exactVersion;
+				version = 1.5.0;
 			};
 		};
 		0B5D325C2DF69E65005FF020 /* XCRemoteSwiftPackageReference "SDWebImageWebPCoder" */ = {
@@ -630,31 +664,33 @@
 				version = 0.14.6;
 			};
 		};
-		0B5D325F2DF69EDB005FF020 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
-			requirement = {
-				kind = exactVersion;
-				version = 8.3.2;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		0B1AE6D02DF180F2006CA50F /* Moya */ = {
+		0B2D004D2DF7EC1300585DF0 /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 0B1AE6CF2DF180F2006CA50F /* XCRemoteSwiftPackageReference "Moya" */;
-			productName = Moya;
+			package = 0B2D004C2DF7EC1300585DF0 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		0B2D00542DF7F3DB00585DF0 /* SDWebImageSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0B2D00532DF7F3DB00585DF0 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
+			productName = SDWebImageSwiftUI;
+		};
+		0B2D00572DF7F3FB00585DF0 /* SDWebImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0B2D00562DF7F3FB00585DF0 /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			productName = SDWebImage;
+		};
+		0B2D005A2DF7F44200585DF0 /* libwebp */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0B2D00592DF7F44200585DF0 /* XCRemoteSwiftPackageReference "libwebp-Xcode" */;
+			productName = libwebp;
 		};
 		0B5D325D2DF69E65005FF020 /* SDWebImageWebPCoder */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 0B5D325C2DF69E65005FF020 /* XCRemoteSwiftPackageReference "SDWebImageWebPCoder" */;
 			productName = SDWebImageWebPCoder;
-		};
-		0B5D32602DF69EDB005FF020 /* Kingfisher */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 0B5D325F2DF69EDB005FF020 /* XCRemoteSwiftPackageReference "Kingfisher" */;
-			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
