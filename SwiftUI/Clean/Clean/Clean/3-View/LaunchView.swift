@@ -4,11 +4,17 @@ import Alamofire
 // MARK: State
 struct LaunchView {
     @EnvironmentObject var router: RouteManager
+    @Environment(\.apiClient) var apiClient
     @Namespace var namespace
     
     @State var isLatestVersion: Bool = true
 }
 
+#Preview(body: {
+    LaunchView()
+        .environmentObject(RouteManager())
+        .environment(\.apiClient, MockAPIClient())
+})
 
 // MARK: View
 extension LaunchView: View {
@@ -54,7 +60,7 @@ extension LaunchView {
             parameters: .init()
         )
         
-        let result = await APIClient.request( model )
+        let result = await apiClient.request( model )
         switch result {
         case .success(let res):
             successGetAppVersion(res.data?.version ?? "")

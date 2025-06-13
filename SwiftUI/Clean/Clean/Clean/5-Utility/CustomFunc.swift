@@ -29,7 +29,7 @@ func localAppVersion() -> String {
 }
 func compareAppVersion(_ version: String) -> Bool {
     let currentVersion = localAppVersion()
-    print("current: \(currentVersion), version: \(version)")
+//    print("current: \(currentVersion), version: \(version)")
     let compareResult = currentVersion.compare(version, options: .numeric)
     switch compareResult {
     case .orderedAscending:// 옛날버전

@@ -10,7 +10,8 @@ import Alamofire
 import SDWebImageWebPCoder
 
 
-class APIClient {
+
+final class APIClient: APIClientProtocol {
     static private let maxFileSize = 1024 * 1024 * 10 // 10MB
     static private let apiDecoder = {
         let decoder = JSONDecoder()
@@ -36,7 +37,7 @@ class APIClient {
     }()
     
     // MARK: API Request
-    static func request<T: APIRequest>(_ request: T) async -> Result<BaseResponse<T.Response>, APIError> {
+    func request<T: APIRequest>(_ request: T) async -> Result<BaseResponse<T.Response>, APIError> {
         
         do {
             // MARK: - 기본 변수 설정
@@ -52,8 +53,8 @@ class APIClient {
                 
                 /// FormData 설정
                 let multipartFormData = MultipartFormData()
-                try appendParameters(request.parameters, to: multipartFormData)// 일반 파라미터를 FormData에 추가
-                await appendMediaFiles(files, to: multipartFormData)// 파일 데이터를 FormData에 추가
+                try APIClient.appendParameters(request.parameters, to: multipartFormData)// 일반 파라미터를 FormData에 추가
+                await APIClient.appendMediaFiles(files, to: multipartFormData)// 파일 데이터를 FormData에 추가
                 
                 
                 /// DataRequest 생성
@@ -92,9 +93,9 @@ class APIClient {
             
             // MARK: API 요청 전송
             print("@API : \(String(describing: request.path))")
-            let result = await dataRequest.serializingDecodable(/// `serializingDecodable` : API요청과 동시에 Decode를 하겠다!
+            let result = await dataRequest.serializingDecodable( /// `serializingDecodable()` : API요청과 동시에 Decode를 하겠다!
                 BaseResponse<T.Response>.self,  /// Decode할 Type 입력
-                decoder: apiDecoder             /// 커스텀 Decoder 주입
+                decoder: APIClient.apiDecoder   /// 커스텀 Decoder 주입
             ).result
             
             
@@ -213,3 +214,9 @@ class APIClient {
 }
 
 
+
+struct MockAPIClient: APIClientProtocol {
+    func request<T: APIRequest>(_ request: T) async -> Result<BaseResponse<T.Response>, APIError> {
+        return .success(T.mock)
+    }
+}

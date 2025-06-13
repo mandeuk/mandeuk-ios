@@ -9,6 +9,7 @@ import Alamofire
 import SwiftUI
 import PhotosUI
 
+// MARK: APIRequest
 protocol APIRequest {
     associatedtype Parameter: Encodable
     associatedtype Response: Codable
@@ -16,22 +17,14 @@ protocol APIRequest {
     var path: String { get }
     var method: HTTPMethod { get }
     var encoder: ParameterEncoder { get }
-    var errorMessages: [Int: String] { get }
-    
     var parameters: Parameter? { get }
     var response: Response? { get set }
     var files: [any MediaAttachable]? { get }
-}
-
-protocol MediaAttachable: Encodable, Equatable {
-    var withName: RequestBodyKey { get }
-    var imageData: Data? { get }
-    var imageURL: URL? { get }
-    var conversionType: MediaConversionType? { get }
-}
-
-extension APIRequest {
     
+    static var errorMessages: [Int: String] { get }
+    static var mock: BaseResponse<Response> { get }
+}
+extension APIRequest {
     var encoder: ParameterEncoder {
         switch method {
         case .get, .delete:
@@ -40,11 +33,9 @@ extension APIRequest {
             return JSONParameterEncoder.default
         }
     }
-    
     var files: [any MediaAttachable]? {
         return nil
     }
-    
     var errorMessages: [Int: String] {
         return [:]
     }
@@ -52,8 +43,13 @@ extension APIRequest {
 
 
 
-
-
+// MARK: MediaAttachable
+protocol MediaAttachable: Encodable, Equatable {
+    var withName: RequestBodyKey { get }
+    var imageData: Data? { get }
+    var imageURL: URL? { get }
+    var conversionType: MediaConversionType? { get }
+}
 enum RequestBodyKey: String, Codable, Equatable {
     case image = "images"
     case video = "video"
@@ -61,7 +57,6 @@ enum RequestBodyKey: String, Codable, Equatable {
     case croppedProfileImg = "croppedProfileImg"
     case profileImage = "profileImage"
 }
-
 enum MediaConversionType: Codable, Equatable {
     case image
     case gif
@@ -78,5 +73,21 @@ enum MediaConversionType: Codable, Equatable {
         default:
             return .none
         }
+    }
+}
+
+
+
+// MARK: APIClient
+protocol APIClientProtocol {
+    func request<T: APIRequest>(_ request: T) async -> Result<BaseResponse<T.Response>, APIError>
+}
+private struct APIClientKey: EnvironmentKey {
+    static let defaultValue: APIClientProtocol = APIClient()
+}
+extension EnvironmentValues {
+    var apiClient: APIClientProtocol {
+        get { self[APIClientKey.self] }
+        set { self[APIClientKey.self] = newValue }
     }
 }
