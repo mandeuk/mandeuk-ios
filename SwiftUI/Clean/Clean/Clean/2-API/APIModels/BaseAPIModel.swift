@@ -7,7 +7,7 @@ struct BaseResponse<T: Codable> : Codable{
     let data: T?
 }
 
-struct APIError: Error, Codable {
+public struct APIError: Error, Codable {
     let statusCode: Int
     let message: String
     static func defaultMessage(forStatusCode statusCode: Int) -> String {
@@ -22,9 +22,8 @@ struct APIError: Error, Codable {
         self.message = message ?? APIError.defaultMessage(forStatusCode: statusCode)
     }
 }
-
-enum APIAction<T: APIRequest> {
-    case request(T.Parameter)
-    case success(BaseResponse<T.Response>)
-    case failed(Error)
+extension Error {
+    public var asAPIError: APIError? {
+        self as? APIError
+    }
 }

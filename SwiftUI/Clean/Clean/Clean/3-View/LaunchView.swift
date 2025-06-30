@@ -56,25 +56,34 @@ extension LaunchView {
 // MARK: API
 extension LaunchView {
     private func requestAPI() async {
-        let model = GetIosVersionCheckModel(
-            parameters: .init()
-        )
         
-        let result = await apiClient.request( model )
-        switch result {
-        case .success(let res):
-            successGetAppVersion(res.data?.version ?? "")
-            return
-        case .failure(let err):
-            print("@LOG \(#function) - failure \(err.statusCode) - \(err.message)")
-            break
+        do {
+            let req = try await apiClient.request( GetIosVersionCheckModel() )
+            successGetAppVersion(req.response?.data?.version ?? "")//
+        } catch {
+            if let err = error.asAPIError {
+                print("@LOG \(#function) - failure \(err.statusCode) - \(err.message)")
+            }
         }
-        return// shutdownApp()
+        
+        
+//        let result = await apiClient.request( GetIosVersionCheckModel() )
+//        switch result {
+//        case .success(let res):
+//            successGetAppVersion(res.data?.version ?? "")
+//            return
+//        case .failure(let err):
+//            print("@LOG \(#function) - failure \(err.statusCode) - \(err.message)")
+//            break
+//        }
+//        return shutdownApp()
     }
     
     @MainActor
     private func successGetAppVersion(_ version: String) {
         isLatestVersion = compareAppVersion(version)
+        print(version)
         router.replaceRoute(.login)
     }
 }
+

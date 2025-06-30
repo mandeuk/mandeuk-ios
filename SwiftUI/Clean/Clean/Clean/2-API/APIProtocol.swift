@@ -18,7 +18,7 @@ protocol APIRequest {
     var method: HTTPMethod { get }
     var encoder: ParameterEncoder { get }
     var parameters: Parameter? { get }
-    var response: Response? { get set }
+    var response: BaseResponse<Response>? { get set } //Response? { get set }
     var files: [any MediaAttachable]? { get }
     
     static var errorMessages: [Int: String] { get }
@@ -80,7 +80,8 @@ enum MediaConversionType: Codable, Equatable {
 
 // MARK: APIClient
 protocol APIClientProtocol {
-    func request<T: APIRequest>(_ request: T) async -> Result<BaseResponse<T.Response>, APIError>
+//    func request<T: APIRequest>(_ request: T) async -> Result<BaseResponse<T.Response>, APIError>
+    func request<T: APIRequest>(_ request: T) async throws -> T//BaseResponse<T.Response>
 }
 private struct APIClientKey: EnvironmentKey {
     static let defaultValue: APIClientProtocol = APIClient()

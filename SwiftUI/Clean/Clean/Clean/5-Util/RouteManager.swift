@@ -30,7 +30,6 @@ final class RouteManager: ObservableObject {
     private func safeRoute(_ action: @escaping () async -> Void) {
         //            print("@Thread \(#function) - \(DispatchQueue.currentLabel)")
         guard !isRouting else { return }
-        
         isRouting = true
         
         Task { @MainActor in

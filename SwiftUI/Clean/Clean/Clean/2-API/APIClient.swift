@@ -13,32 +13,11 @@ import SDWebImageWebPCoder
 
 final class APIClient: APIClientProtocol {
     static private let maxFileSize = 1024 * 1024 * 10 // 10MB
-    static private let apiDecoder = {
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .custom({ (decoder) -> Date in
-            let container = try decoder.singleValueContainer()
-            let dateString = try container.decode(String.self)
-            
-            if dateString.isEmpty {
-                return Date(timeIntervalSince1970: 0)
-            }
-            
-            let isoFormatter = ISO8601DateFormatter()
-            isoFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
-            
-            if let date = isoFormatter.date(from: dateString) {
-                return date
-            } else {
-                throw DecodingError.dataCorruptedError(in: container, debugDescription: "Invalid date: \(dateString)")
-            }
-        })
-        
-        return decoder
-    }()
+    static private let apiDecoder = APIDecoder()
     
     // MARK: API Request
-    func request<T: APIRequest>(_ request: T) async -> Result<BaseResponse<T.Response>, APIError> {
-        
+//    func request<T: APIRequest>(_ request: T) async -> Result<BaseResponse<T.Response>, APIError> {
+    func request<T: APIRequest>(_ request: T) async throws -> T/*BaseResponse<T.Response>*/ {
         do {
             // MARK: - 기본 변수 설정
             var headers = URLSessionConfiguration.af.default.headers/// - 기본 헤더 불러오기
@@ -92,12 +71,12 @@ final class APIClient: APIClientProtocol {
             
             
             // MARK: API 요청 전송
-            print("@API : \(String(describing: request.path))")
+            print("[API] : \(String(describing: request.path))")
             let result = await dataRequest.serializingDecodable( /// `serializingDecodable()` : API요청과 동시에 Decode를 하겠다!
                 BaseResponse<T.Response>.self,  /// Decode할 Type 입력
                 decoder: APIClient.apiDecoder   /// 커스텀 Decoder 주입
             ).result
-            
+            print("[API] : \(result)")
             
             // MARK: API 결과 처리
             switch result {
@@ -108,7 +87,9 @@ final class APIClient: APIClientProtocol {
                         message: request.errorMessages[value.statusCode]
                     )
                 }
-                return .success(value)
+                var req = request
+                req.response = value
+                return req//value//.success(value)
             case .failure(let err):
                 throw APIError(
                     statusCode: err.responseCode ?? 0,
@@ -117,12 +98,17 @@ final class APIClient: APIClientProtocol {
             }
         } catch {
             // MARK: 오류 발생 처리
-            return .failure(
-                error as? APIError ??
-                APIError(
-                    statusCode: error.asAFError?.responseCode ?? 0,
-                    message: error.asAFError?.errorDescription ?? "API Failure"
-                )
+//            return .failure(
+//                error as? APIError ??
+//                APIError(
+//                    statusCode: error.asAFError?.responseCode ?? 0,
+//                    message: error.asAFError?.errorDescription ?? "API Failure"
+//                )
+//            )
+            throw error.asAPIError ??
+            APIError(
+                statusCode: error.asAFError?.responseCode ?? 0,
+                message: error.asAFError?.errorDescription
             )
         }
     }
@@ -211,12 +197,46 @@ final class APIClient: APIClientProtocol {
         
         return webpData
     }
+    
+    private static func APIDecoder() -> JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .custom({ (decoder) -> Date in
+            let container = try decoder.singleValueContainer()
+            let dateString = try container.decode(String.self)
+            
+            if dateString.isEmpty {
+                return Date(timeIntervalSince1970: 0)
+            }
+            
+            let isoFormatter = ISO8601DateFormatter()
+            isoFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+            
+            if let date = isoFormatter.date(from: dateString) {
+                return date
+            } else {
+                throw DecodingError.dataCorruptedError(in: container, debugDescription: "Invalid date: \(dateString)")
+            }
+        })
+        return decoder
+    }
 }
 
 
 
 struct MockAPIClient: APIClientProtocol {
-    func request<T: APIRequest>(_ request: T) async -> Result<BaseResponse<T.Response>, APIError> {
-        return .success(T.mock)
+//    func request<T: APIRequest>(_ request: T) async -> Result<BaseResponse<T.Response>, APIError> {
+//        return .success(T.mock)
+//    }
+    func request<T: APIRequest>(_ request: T) async throws -> T /*BaseResponse<T.Response>*/ {
+        let value = T.mock
+        
+        if 200..<400 ~= value.statusCode {
+            var req = request
+            req.response = value
+            return req
+        } else {
+            throw APIError(statusCode: value.statusCode, message: value.message)
+        }
+        
     }
 }

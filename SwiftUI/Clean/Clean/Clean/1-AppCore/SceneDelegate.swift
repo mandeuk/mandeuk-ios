@@ -6,14 +6,18 @@ class SceneDelegate: NSObject, ObservableObject, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = scene as? UIWindowScene else { return }
         self.window = windowScene.keyWindow   // << store !!!
+        /// Unity와 window 연결해 줄 때 사용
     }
+    
     
     // MARK: Universal link
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
-        guard let url = URLContexts.first?.url else { return }
+//        guard let url = URLContexts.first?.url else { return }
     }
     
-    // Inactive or Background -> Active
+    
+
+    // Inactive -> Active
     func sceneDidBecomeActive(_ scene: UIScene) {
         print("[LifeCycle] - sceneDidBecomeActive - \(scene.activationState)")
         
@@ -26,7 +30,7 @@ class SceneDelegate: NSObject, ObservableObject, UIWindowSceneDelegate {
         }
     }
     
-    // Active -> will Inactive
+    // Active -> Inactive
     func sceneWillResignActive(_ scene: UIScene) {
         print("[LifeCycle] - sceneWillResignActive - \(scene.activationState)")
     }
@@ -36,15 +40,15 @@ class SceneDelegate: NSObject, ObservableObject, UIWindowSceneDelegate {
         print("[LifeCycle] - sceneDidEnterBackground - \(scene.activationState)")
     }
     
-    // Background -> will Active
+    // Background -> Inactive
     func sceneWillEnterForeground(_ scene: UIScene) {
         print("[LifeCycle] - sceneWillEnterForeground - \(scene.activationState)")
     }
-    
-    // Closed
+    // Background -> Closed
     func sceneDidDisconnect(_ scene: UIScene) {
         print("[LifeCycle] - sceneDidDisconnect - \(scene.activationState)")
         UserDefaults.standard.setValue(true, forKey: "appClosed")
     }
+    
 }
 

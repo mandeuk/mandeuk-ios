@@ -16,7 +16,7 @@ func shutdownApp() {
     }
 }
 
-// MARK: 앱 버전 비교
+// MARK: 현재 설치된 앱 버전 가져오기
 func localAppVersion() -> String {
     guard
         let dictionary = Bundle.main.infoDictionary,
@@ -27,6 +27,8 @@ func localAppVersion() -> String {
     
     return version
 }
+
+// MARK: 앱 버전 비교
 func compareAppVersion(_ version: String) -> Bool {
     let currentVersion = localAppVersion()
 //    print("current: \(currentVersion), version: \(version)")

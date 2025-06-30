@@ -5,6 +5,7 @@ struct MainView {
     @EnvironmentObject var router: RouteManager
     @State var isLatestVersion: Bool = true
     @State var testData: TestData
+    
     var param: [String:Any]? = nil
     
     init(_ param: [String:Any]?) {

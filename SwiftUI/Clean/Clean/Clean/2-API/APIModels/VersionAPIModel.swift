@@ -1,11 +1,11 @@
-import Foundation
 import Alamofire
+import SwiftUI
 
 struct GetIosVersionCheckModel: APIRequest {
     var path: String { ApiAddress.Version.getIosVersionCheck.urlString }
     var method: HTTPMethod { .get }
     var parameters: Parameter? = nil
-    var response: Response? = nil
+    var response: BaseResponse<Response>? = nil
     var files: [any MediaAttachable]? = nil
     
     struct Parameter: Codable { }
@@ -36,11 +36,11 @@ struct GetIosVersionCheckModel: APIRequest {
 }
 
 
-struct DeleteModel: APIRequest {
+struct DeleteUserModel: APIRequest {
     var path: String { ApiAddress.User.deleteUser.urlString }
     var method: HTTPMethod { .delete }
     var parameters: Parameter? = nil
-    var response: Response? = nil
+    var response: BaseResponse<Response>? = nil
     var files: [any MediaAttachable]? = nil
     
     struct Parameter: Codable {

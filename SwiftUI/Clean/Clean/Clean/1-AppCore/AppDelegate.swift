@@ -5,25 +5,30 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
-        print("AppDelegate")
+//        print("AppDelegate")
 
         return true
     }
     
-    func application(_: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
-        print("Oh no! Failed to register for remote notifications with error \(error)")
-    }
-    
-    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        // registerForRemoteNotifications() 가 성공했을 때
-    }
-    
+    /// SceneDelegate 연결
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
         let configuration = UISceneConfiguration(name: nil, sessionRole: connectingSceneSession.role)
         if connectingSceneSession.role == .windowApplication {
             configuration.delegateClass = SceneDelegate.self
         }
         return configuration
+    }
+    
+    
+    
+    /// registerForRemoteNotifications() 가 실패했을 때
+    func application(_: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        print("Oh no! Failed to register for remote notifications with error \(error)")
+    }
+    
+    /// registerForRemoteNotifications() 가 성공했을 때
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        
     }
 }
 
